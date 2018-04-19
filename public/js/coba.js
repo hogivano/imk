@@ -16,7 +16,7 @@ renderer.setClearColor(0x7d5fff);
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 
-rendererMenu.setClearColor(0x7d5fff);
+rendererMenu.setClearColor(0x009688);
 rendererMenu.setPixelRatio(window.devicePixelRatio);
 rendererMenu.setSize(window.innerWidth, window.innerHeight);
 
@@ -90,8 +90,16 @@ for (var i = 0; i < 20000; i++) {
     z = (Math.random() * 800) - 400;
 
     particles.vertices.push (new THREE.Vector3(x, y, z));
+}
+
+for (var j = 0; j < 1000; j++) {
+    x = (Math.random() * 800) - 400;
+    y = (Math.random() * 800) - 400;
+    z = (Math.random() * 800) - 400;
+
     particlesMenu.vertices.push (new THREE.Vector3(x, y, z));
 }
+
 var particleSystem = new THREE.ParticleSystem(particles, cloudMaterial);
 var particleSystemMenu = new THREE.ParticleSystem(particlesMenu, cloudMaterial);
 
@@ -123,6 +131,10 @@ function render(){
         particleSystem.rotation.y += 0.00001 * i;
         particleSystem.rotation.x += 0.00006 * i;
         particleSystem.rotation.z += 0.00011 * i;
+
+        particleSystemMenu.rotation.y += 0.00001 * i;
+        particleSystemMenu.rotation.x += 0.00006 * i;
+        particleSystemMenu.rotation.z += 0.00011 * i;
     }
 
     renderer.render(scene, camera);
@@ -156,6 +168,10 @@ function showButton(){
 
     });
 }
+
+$('#tentang').on('click', function(){
+    $('.tap-target').tapTarget('open');
+});
 
 $('.btn-flat').on('click', function(){
     $('.home').addClass('hide');

@@ -1,0 +1,23 @@
+.btn-floating {
+    background-color: transparent !important; border: 2px solid #673ab7;
+}
+.tap-target-wave::before, .tap-target-wave::after {
+    background-color: #7d5fff !important;
+    opacity: 0.5;
+}
+
+input {
+    color: 0xffffff;
+}
+
+input[type=email]:focus:not([readonly]), input[type=password]:focus:not([readonly]) {
+    border-bottom: 1px solid white;
+}
+
+.ipt .active {
+    color: white !important;
+}
+
+.formLogin{
+    width: 100%;
+}
