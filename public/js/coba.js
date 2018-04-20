@@ -70,6 +70,13 @@ mesh4.position.x = -400;
 mesh4.position.y = -250;
 scene.add(mesh4);
 
+var circle = new THREE.CircleGeometry(100, 100,100);
+var circleMesh = new THREE.Group(circle, material);
+circleMesh.position.z = -1500;
+circleMesh.position.x = 300;
+circleMesh.position.y = 200;
+sceneMenu.add(circleMesh);
+
 var particles = new THREE.Geometry();
 var particlesMenu = new THREE.Geometry();
 
@@ -92,7 +99,7 @@ for (var i = 0; i < 20000; i++) {
     particles.vertices.push (new THREE.Vector3(x, y, z));
 }
 
-for (var j = 0; j < 1000; j++) {
+for (var j = 0; j < 5000; j++) {
     x = (Math.random() * 800) - 400;
     y = (Math.random() * 800) - 400;
     z = (Math.random() * 800) - 400;
@@ -142,7 +149,7 @@ function render(){
 }
 
 function setJudul(){
-    $('#judul').delay(2000).animate({'opacity' : 1}, function(){
+    $('#judul').delay(200).animate({'opacity' : 1}, function(){
         $('#judul').animate({'opacity': 0}, 200, function(){
             $(this).text("asah kemampuanmu").animate({opacity:1},function(){
                 $(this).delay(300).animate({opacity:0},function(){
@@ -164,16 +171,21 @@ function setJudul(){
 }
 
 function showButton(){
-    $('#btn-menu').animate({'opacity': 1}, 2000, function(){
-
-    });
+    $('#btn-menu').fadeIn(3000);
 }
 
 $('#tentang').on('click', function(){
     $('.tap-target').tapTarget('open');
 });
 
+$('#keluar').on('click', function(){
+    $('.login').fadeOut();
+    $('.home').fadeIn();
+});
+
 $('.btn-flat').on('click', function(){
-    $('.home').addClass('hide');
-    $('.login').removeClass('hide');
+    $('.home').fadeOut();
+    $('.login').fadeIn();
+    // $('.home').addClass('hide');
+    // $('.login').removeClass('hide');
 });

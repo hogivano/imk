@@ -42,7 +42,7 @@
                         name="button">Daftar</button>
                     </div> -->
             </div>
-            <div id="btn-menu" class="content valign-wrapper" style="opacity: 0">
+            <div id="btn-menu" class="content valign-wrapper" style="display:none">
                 <div class="center-align" style="width:100%; margin-top: 100px">
                     <a href="#" class="btn-flat" style="color:white">Masuk</a>
                     <a href="#" class="btn-flat" style="color:white">Daftar</a>
@@ -60,7 +60,7 @@
             <canvas id="canvas"></canvas>
         </div>
     </div>
-    <div class="login hide">
+    <div class="login" style="display:none">
         <div class="content">
             <div class="content valign-wrapper">
                 <div style="margin: auto; width: 40%;border: 1px solid white; background-color: black; opacity: 0.3; padding:80px 30px">
@@ -73,27 +73,35 @@
                                     <label for="email">Email</label>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row" style="margin-bottom: 5px">
                                 <div class="input-field ipt col s12">
                                     <input id="password" type="password" class="validate">
                                     <label for="password">Password</label>
                                 </div>
                             </div>
                             <div class="row">
+                                <div class="col s12 left-align">
+                                    <span>Tidak memiliki akun ? <a href="#">Daftar</a></span>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="col s12">
-                                    <button type="button" class="btn-flat" style="color:white; width: 30%" name="button">Login</button>
+                                    <button type="button" class="" style="color:white; width: 20%; padding: 5px 0; background-color: transparent; border: 1px solid white" name="button">Login</button>
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
+            <div class="left-align" style="position:absolute; bottom:0; margin-left: 2%; margin-bottom: 2%">
+                <a id="keluar" class="waves-effect btn btn-floating">x</a>
+            </div>
+            <canvas id="canvasLogin"></canvas>
         </div>
-        <canvas id="canvasLogin"></canvas>
     </div>
-        <script src="/js/three.js"></script>
-        <script src="/js/jquery-3.2.1.js"></script>
-        <script src="/js/materialize.js"></script>
-        <script src="/js/coba.js"> </script>
+    <script src="/js/three.js"></script>
+    <script src="/js/jquery-3.2.1.js"></script>
+    <script src="/js/materialize.js"></script>
+    <script src="/js/coba.js"> </script>
 </body>
 </html>
