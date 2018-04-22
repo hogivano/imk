@@ -9,7 +9,7 @@ renderer = new THREE.WebGLRenderer({
 });
 
 rendererMenu = new THREE.WebGLRenderer({
-    canvas: canvasMenu, antialias : true
+    canvas: canvasMenu, antialias : true, alpha: true
 });
 
 renderer.setClearColor(0x7d5fff);
@@ -144,19 +144,21 @@ function render(){
         particleSystemMenu.rotation.z += 0.00011 * i;
     }
 
+    TWEEN.update();
+
     renderer.render(scene, camera);
     rendererMenu.render(sceneMenu, cameraMenu);
 }
 
 function setJudul(){
-    $('#judul').delay(200).animate({'opacity' : 1}, function(){
-        $('#judul').animate({'opacity': 0}, 200, function(){
+    $('#judul').delay(20).animate({'opacity' : 1}, function(){
+        $('#judul').animate({'opacity': 0}, 20, function(){
             $(this).text("asah kemampuanmu").animate({opacity:1},function(){
-                $(this).delay(300).animate({opacity:0},function(){
+                $(this).delay(30).animate({opacity:0},function(){
                     $(this).text("untuk menjadi yang terhebat").animate({opacity:1},function(){
-                        $(this).delay(300).animate({opacity:0},function(){
+                        $(this).delay(30).animate({opacity:0},function(){
                             $(this).text("di").animate({opacity:1},function(){
-                                $(this).delay(300).animate({opacity:0},function(){
+                                $(this).delay(30).animate({opacity:0},function(){
                                     $(this).text("MathOlimpic").animate({opacity:1},function(){
                                         showButton();
                                     });
@@ -183,9 +185,42 @@ $('#keluar').on('click', function(){
     $('.home').fadeIn();
 });
 
-$('.btn-flat').on('click', function(){
+$('#btnMasuk').on('click', function(){
+    $('#masuk').css('top', '0');
+    $('#daftar').css('top', '100%');
+
     $('.home').fadeOut();
     $('.login').fadeIn();
     // $('.home').addClass('hide');
     // $('.login').removeClass('hide');
+});
+$('#btnDaftar').on('click', function(){
+    $('#masuk').css('top', '-100%');
+    $('#daftar').css('top', '0');
+    $('.home').fadeOut();
+    $('.login').fadeIn();
+    // $('.home').addClass('hide');
+    // $('.login').removeClass('hide');
+});
+
+$('#aDaftar').on('click', function(){
+    $('#masuk').animate({
+        top: '-100%'
+    }, 1000);
+    $('#daftar').animate({
+        top: '0'
+    }, 1000);
+
+    new TWEEN.Tween(rendererMenu.setClearColor(0x009688)).to(rendererMenu.setClearColor(0x000000))
+					.easing( TWEEN.Easing.Elastic.Out).start();
+});
+
+$('#aMasuk').on('click', function(){
+    $('#daftar').animate({
+        top: '100%'
+    }, 1000);
+
+    $('#masuk').animate({
+        top: '0'
+    }, 1000);
 });

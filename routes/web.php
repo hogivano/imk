@@ -18,3 +18,7 @@ Route::get('/', function () {
 Route::get('/menu', function (){
     return view('menus');
 });
+
+Route::get('/dashboard', function(){
+    return view('/users/dashboard');
+});
