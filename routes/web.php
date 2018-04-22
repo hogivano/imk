@@ -19,6 +19,15 @@ Route::get('/menu', function (){
     return view('menus');
 });
 
-Route::get('/dashboard', function(){
-    return view('/users/dashboard');
+Route::post('/daftar', 'DaftarController@daftar')->name('daftar');
+Route::post('/masuk', 'MasukController@masuk')->name('masuk');
+
+Route::group(['prefix' => 'users'], function () {
+    Route::get('/dashboard', function(){
+        return view('/users/dashboard');
+    });
+});
+
+Route::group(['prefix' => 'admin'], function () {
+    Route::get('dashboard', 'AdminController@index')->name('admin.dashboard');
 });

@@ -81,7 +81,7 @@
                             </div>
                             <div class="row">
                                 <div class="col s12 left-align">
-                                    <span>Tidak memiliki akun ? <a id="aDaftar" href="#">Masuk</a></span>
+                                    <span>Belum memiliki akun ? <a id="aDaftar" href="#">Daftar</a></span>
                                 </div>
                             </div>
                             <div class="row">
@@ -97,11 +97,12 @@
                 <div style="margin: auto; width: 40%;border: 1px solid white; background-color: black; opacity: 0.3; padding:10px 30px;">
                     <h3 style="color:white; margin-bottom: 50px;"><b>Daftar</b></h3>
                     <div class="formLogin">
-                        <form class="" action="index.html" method="post">
+                        <form class="" action="/daftar" method="post">
+                            {{ csrf_field() }}
                             <div class="row" style="margin-bottom: 5px">
                                 <div class="input-field ipt col s12">
-                                    <input id="nama" name="nama" type="text" class="validate">
-                                    <label for="email">Nama Lengkap</label>
+                                    <input id="nama" name="nama_lengkap" type="text" class="validate">
+                                    <label for="nama">Nama Lengkap</label>
                                 </div>
                             </div>
                             <div class="row" style="margin-bottom: 5px">
@@ -129,7 +130,7 @@
                             </div>
                             <div class="row">
                                 <div class="col s12">
-                                    <button type="button" class="" style="color:white; width: 20%; padding: 5px 0; background-color: transparent; border: 1px solid white" name="button">Daftar</button>
+                                    <button type="submit" class="" style="color:white; width: 20%; padding: 5px 0; background-color: transparent; border: 1px solid white" name="button">Daftar</button>
                                 </div>
                             </div>
                         </form>

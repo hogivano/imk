@@ -65,5 +65,5 @@
 </div>
 @endsection
 @section("script")
-<script src="dashboard.js"></script>
+<script src="/js/dashboard.js"></script>
 @endsection

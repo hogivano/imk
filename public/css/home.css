@@ -7,7 +7,7 @@
 }
 
 input {
-    color: 0xffffff;
+    color: white;
 }
 
 input[type=email]:focus:not([readonly]), input[type=password]:focus:not([readonly]) {

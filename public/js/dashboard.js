@@ -49,17 +49,17 @@ var cloudMaterial = new THREE.ParticleBasicMaterial({
     color : 0xffffff,
     size : 1,
     map: THREE.ImageUtils.loadTexture(
-    "images/dot.png"
+    "../images/dot.png"
   ),
   blending: THREE.AdditiveBlending,
   transparent: true
 });
 
 var x, y, z;
-for (var i = 0; i < 20000; i++) {
-    x = (Math.random() * 500) - 400;
-    y = (Math.random() * 500) - 400;
-    z = (Math.random() * 500) - 400;
+for (var i = 0; i < 5000; i++) {
+    x = (Math.random() * 1000) - 400;
+    y = (Math.random() * 1000) - 400;
+    z = (Math.random() * 1000) - 400;
 
     particles.vertices.push (new THREE.Vector3(x, y, z));
 }

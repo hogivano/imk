@@ -39,7 +39,7 @@
                                     <div class="user-view">
                                         <div class="">
                                             <div>
-                                                <img class="circle responsive-img" width="100vh" src="../images/avatar.png">
+                                                <img class="circle responsive-img" width="100vh" src="images/avatar.png">
                                             </div>
                                             <div class="detail">
                                                 <p>1000</p>
@@ -65,9 +65,10 @@
         </div>
     </div>
 </body>
-<script src="../js/three.js"></script>
-<script src="../js/jquery-3.2.1.js"></script>
-<script src="../js/materialize.js"></script>
+<script src="/js/three.js"></script>
+<script src="/js/jquery-3.2.1.js"></script>
+<script src="/js/materialize.js"></script>
+<script src="/js/dashboard.js"></script>
 @yield("script")
 
 </html>

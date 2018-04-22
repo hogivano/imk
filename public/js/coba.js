@@ -211,7 +211,7 @@ $('#aDaftar').on('click', function(){
         top: '0'
     }, 1000);
 
-    new TWEEN.Tween(rendererMenu.setClearColor(0x009688)).to(rendererMenu.setClearColor(0x000000))
+    new TWEEN.Tween(rendererMenu.setClearColor(0x009688)).to(rendererMenu.setClearColor(0x009699))
 					.easing( TWEEN.Easing.Elastic.Out).start();
 });
 
