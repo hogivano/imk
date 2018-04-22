@@ -11,16 +11,15 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@index');
+Route::post('/', [ 'as' => 'login', 'uses' => 'LoginController@login']);
 
 Route::get('/menu', function (){
     return view('menus');
 });
 
 Route::post('/daftar', 'DaftarController@daftar')->name('daftar');
-Route::post('/masuk', 'MasukController@masuk')->name('masuk');
+
 
 Route::group(['prefix' => 'users'], function () {
     Route::get('/dashboard', function(){
@@ -29,5 +28,15 @@ Route::group(['prefix' => 'users'], function () {
 });
 
 Route::group(['prefix' => 'admin'], function () {
-    Route::get('dashboard', 'AdminController@index')->name('admin.dashboard');
+    Route::get('/', 'AdminController@index')->name('admin.dashboard');
+    Route::get('/soal', 'AdminController@indexSoal')->name('admin.soal');
+    Route::get('/soal/baru', 'AdminController@baruSoalShow')->name('admin.soal.baru');
+
+    Route::get('/warna', 'AdminController@indexWarna')->name('admin.warna');
+    Route::get('/warna/baru', 'AdminController@baruWarnaShow')->name('admin.warna.baru');
+    Route::post('/warna/baru', 'AdminController@warnaCreate')->name('admin.warna.create');
+
+    Route::get('/bentuk', 'AdminController@indexBentuk')->name('admin.bentuk');
+    Route::get('/bentuk/baru', 'AdminController@baruBentukShow')->name('admin.bentuk.baru');
+    Route::post('/bentuk/baru', 'AdminController@bentukCreate')->name('admin.bentuk.create');
 });

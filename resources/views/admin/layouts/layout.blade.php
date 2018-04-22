@@ -4,8 +4,8 @@
 <head>
     <meta charset="utf-8">
     <title>@yield("title")</title>
-    <link rel="stylesheet" href="/css/materialize.css">
-    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="{{asset('css/materialize.css')}}">
+    <link rel="stylesheet" href="{{asset('css/layout.css')}}">
     <style>
         .collection.with-header .collection-item {
             padding-left: 10px
@@ -39,19 +39,18 @@
                                     <div class="user-view">
                                         <div class="">
                                             <div>
-                                                <img class="circle responsive-img" width="100vh" src="images/avatar.png">
+                                                <img class="circle responsive-img" width="100vh" src="{{ asset('images/avatar.png') }}">
                                             </div>
                                             <div class="detail">
-                                                <p>1000</p>
-                                                <p>Hendriyan Ogivano</p>
+                                                <p>Adminku</p>
                                                 <p>hogivano@gmail.com</p>
                                             </div>
                                         </div>
                                     </div>
                                 </li>
-                                <li class="collection-item"><a href="#">Semua Soal</a></li>
-                                <li class="collection-item">Soal </li>
-                                <li class="collection-item">Alvin</li>
+                                <li class="collection-item"><a href="{{route('admin.soal')}}">Soal</a></li>
+                                <li class="collection-item"><a href="{{route('admin.bentuk')}}">Bentuk</a></li>
+                                <li class="collection-item"><a href="{{route('admin.warna')}}">Warna</a></li>
                                 <li class="collection-item">Keluar</li>
                             </ul>
                         </div>
@@ -65,10 +64,10 @@
         </div>
     </div>
 </body>
-<script src="/js/three.js"></script>
-<script src="/js/jquery-3.2.1.js"></script>
-<script src="/js/materialize.js"></script>
-<script src="/js/dashboard.js"></script>
+<script src="{{asset('js/three.js')}}"></script>
+<script src="{{asset('js/jquery-3.2.1.js')}}"></script>
+<script src="{{asset('js/materialize.js')}}"></script>
+<script src="{{asset('js/layout-admin.js')}}"></script>
 @yield("script")
 
 </html>

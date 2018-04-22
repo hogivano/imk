@@ -19,3 +19,29 @@ canvas {
     top: 0;
     bottom: 0;
 }
+
+input {
+    color: white;
+    border-bottom: 1px solid white;
+}
+
+.ipt .active {
+    color: white !important;
+}
+
+.div-warna {
+    height: 150px;
+}
+
+.link {
+    padding-bottom: 15px !important;
+}
+
+.btnBaru {
+    color:white !important;
+    width: 20%;
+    height: 60px !important;
+    line-height: 60px !important;
+    border: 1px solid white !important;
+    margin: 3% 0;
+}

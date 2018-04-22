@@ -44,7 +44,7 @@
             </div>
             <div id="btn-menu" class="content valign-wrapper" style="display:none">
                 <div class="center-align" style="width:100%; margin-top: 100px">
-                    <a href="#" id="btnMasuk" class="btn-flat" style="color:white">Masuk</a>
+                    <button id="btnMasuk" class="btn-flat" style="color:white">Masuk</button>
                     <a href="#" id="btnDaftar" class="btn-flat" style="color:white">Daftar</a>
                 </div>
             </div>
@@ -66,16 +66,17 @@
                 <div style="margin: auto; width: 40%;border: 1px solid white; background-color: black; opacity: 0.3; padding:80px 30px; box-shadow: 5px 10px #888888;">
                     <h3 style="color:white; margin-bottom: 50px;"><b>Masuk</b></h3>
                     <div class="formLogin">
-                        <form class="" action="index.html" method="post">
+                        <form class="" action="/" method="post">
+                            {{ csrf_field() }}
                             <div class="row">
                                 <div class="input-field ipt col s12">
-                                    <input id="email" type="email" class="validate">
+                                    <input id="email" name="email" type="email" class="validate">
                                     <label for="email">Email</label>
                                 </div>
                             </div>
                             <div class="row" style="margin-bottom: 5px">
                                 <div class="input-field ipt col s12">
-                                    <input id="password" type="password" class="validate">
+                                    <input id="password" name="password" type="password" class="validate">
                                     <label for="password">Password</label>
                                 </div>
                             </div>
@@ -86,7 +87,7 @@
                             </div>
                             <div class="row">
                                 <div class="col s12">
-                                    <button type="button" class="" style="color:white; width: 20%; padding: 5px 0; background-color: transparent; border: 1px solid white" name="button">Login</button>
+                                    <button type="submit" class="" style="color:white; width: 20%; padding: 5px 0; background-color: transparent; border: 1px solid white" name="button">Login</button>
                                 </div>
                             </div>
                         </form>

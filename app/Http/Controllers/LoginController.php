@@ -6,13 +6,11 @@ use App\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
-class MasukController extends Controller{
+class LoginController extends Controller{
     public function __construct(){
         $this->middleware('guest')->except('logout');
     }
-    public function masukPage(){
-        return view ('masuk');
-    }
+
     public function login(Request $req){
         $valid = $this->validator($req->all());
         if ($valid->fails()){
@@ -30,7 +28,7 @@ class MasukController extends Controller{
                         //     'fails'     => false,
                         //     'redirect'  => route('admin.dashboard')
                         // ));
-                        return redirect()->action('AdminController@index');
+                        return redirect()->route('admin.dashboard');
                     }else if ($req->role == 1){
                         $this->guard()->attempt([
                             'email'     => $req->email,

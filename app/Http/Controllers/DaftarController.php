@@ -52,8 +52,8 @@ class DaftarController extends Controller {
             }
             else {
               $user = User::create([
+                    'nama_lengkap' => $nama_lengkap,
                     'email' => $email,
-                    'username' => $nama_lengkap,
                     'password'  => $password,
                     'role'      => 1,
                     'auth_key' => $token
