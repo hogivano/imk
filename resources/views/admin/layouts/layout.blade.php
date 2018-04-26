@@ -42,7 +42,7 @@
                                                 <img class="circle responsive-img" width="100vh" src="{{ asset('images/avatar.png') }}">
                                             </div>
                                             <div class="detail">
-                                                <p>Adminku</p>
+                                                <p>admin</p>
                                                 <p>hogivano@gmail.com</p>
                                             </div>
                                         </div>
@@ -51,7 +51,7 @@
                                 <li class="collection-item"><a href="{{route('admin.soal')}}">Soal</a></li>
                                 <li class="collection-item"><a href="{{route('admin.bentuk')}}">Bentuk</a></li>
                                 <li class="collection-item"><a href="{{route('admin.warna')}}">Warna</a></li>
-                                <li class="collection-item">Keluar</li>
+                                <li class="collection-item"><a href="{{route('admin.keluar')}}">Keluar</a></li>
                             </ul>
                         </div>
                     </div>

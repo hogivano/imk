@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 use Auth;
 use App\User;
+use App\PoinUsers;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -51,13 +52,30 @@ class DaftarController extends Controller {
               ));
             }
             else {
-              $user = User::create([
-                    'nama_lengkap' => $nama_lengkap,
-                    'email' => $email,
-                    'password'  => $password,
-                    'role'      => 1,
-                    'auth_key' => $token
-                ]);
+            //   $user = User::create([
+            //         'nama_lengkap' => $nama_lengkap,
+            //         'email' => $email,
+            //         'password'  => $password,
+            //         'role'      => 1,
+            //         'auth_key' => $token
+            //     ]);
+
+                $user = new User();
+                $user->nama_lengkap = $nama_lengkap;
+                $user->email = $email;
+                $user->password = $password;
+                $user->role = 1;
+                $user->auth_key = $token;
+                $user->save();
+
+                $count = User::all();
+                $idTerakhir = $count->last();
+
+                $poinUser = new PoinUsers();
+                $poinUser->id_users = $idTerakhir->id_users;
+                $poinUser->poin_users = 0;
+                $poinUser->save();
+
               return response()->json(array(
                 'success' => true,
                 'message' => 'Akun telah dibuat. Silahkan login',

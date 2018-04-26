@@ -56,12 +56,12 @@ mesh2.position.y = -100;
 
 scene.add(mesh2);
 
-var kotak = new THREE.PlaneGeometry(100, 100);
-var mesh3 = new THREE.Mesh(kotak, material);
-mesh3.position.z = -1500;
-mesh3.position.x = 350;
-mesh3.position.y = 200;
-scene.add(mesh3);
+// var kotak = new THREE.PlaneGeometry(100, 100);
+// var mesh3 = new THREE.Mesh(kotak, material);
+// mesh3.position.z = -1500;
+// mesh3.position.x = 350;
+// mesh3.position.y = 200;
+// scene.add(mesh3);
 
 var bulat = new THREE.RingGeometry(50,80,3);
 var mesh4 = new THREE.Mesh(bulat, material);
@@ -76,6 +76,13 @@ circleMesh.position.z = -1500;
 circleMesh.position.x = 300;
 circleMesh.position.y = 200;
 sceneMenu.add(circleMesh);
+
+var plane = new THREE.OctahedronGeometry(100, 2);
+var planeMesh = new THREE.Mesh(plane, material);
+planeMesh.position.z = -1500;
+planeMesh.position.x = 300;
+planeMesh.position.y = 200;
+scene.add(planeMesh);
 
 var particles = new THREE.Geometry();
 var particlesMenu = new THREE.Geometry();
@@ -128,11 +135,14 @@ function render(){
     mesh2.rotation.x += 0.01;
     mesh2.rotation.y += 0.001;
 
-    mesh3.rotation.z += 0.001;
-    mesh3.rotation.y += 0.008;
+    // mesh3.rotation.z += 0.001;
+    // mesh3.rotation.y += 0.008;
 
     mesh4.rotation.z += 0.001;
     mesh4.rotation.y += 0.008;
+
+    planeMesh.rotation.x += 0.001;
+    planeMesh.rotation.y += 0.001;
 
     for (var i = 0; i < 3; i++) {
         particleSystem.rotation.y += 0.00001 * i;
@@ -223,4 +233,7 @@ $('#aMasuk').on('click', function(){
     $('#masuk').animate({
         top: '0'
     }, 1000);
+
+    new TWEEN.Tween(rendererMenu.setClearColor(0x009699)).to(rendererMenu.setClearColor(0x009668))
+					.easing( TWEEN.Easing.Elastic.Out).start();
 });

@@ -4,4 +4,5 @@
 </div>
 @endsection
 @section("script")
+<script src="/js/dashboard-admin.js"></script>
 @endsection

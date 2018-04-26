@@ -3,9 +3,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use App\User;
+use App\PoinUsers;
+
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
+
 class LoginController extends Controller{
     public function __construct(){
         $this->middleware('guest')->except('logout');
@@ -22,22 +26,32 @@ class LoginController extends Controller{
             $user = User::where('email', $req->email)->first();
             if (!empty($user)){
                 if (Hash::check($req->password, $user->password)){
-                    if ($req->role == 0){
+
+                    if ($user->role == 0){
                         Auth::guard('admin')->attempt(['email' => $req->email, 'password' => $req->password], $req->has('remember'));
                         // return response()->json(array(
                         //     'fails'     => false,
                         //     'redirect'  => route('admin.dashboard')
                         // ));
                         return redirect()->route('admin.dashboard');
-                    }else if ($req->role == 1){
+                    }else if ($user->role == 1){
                         $this->guard()->attempt([
                             'email'     => $req->email,
                             'password'  => $req->password
                         ], $req->has('remember'));
-                        return response()->json(array(
-                            'fails'     => false,
-                            'message'   => 'anda masuk halaman user biasa'
-                        ));
+
+                        Session::put('namaUser',$user->nama_lengkap);
+                        Session::put('idUser',$user->id_users);
+                        Session::put('emailUser',$user->email);
+
+                        $poinUsers = PoinUsers::where('id_users', $user->id_users)->get();
+
+                        foreach ($poinUsers as $i) {
+                            # code...
+                            Session::put('poinUser', $i->poin_users);
+                        }
+
+                        return redirect()->route('users.dashboard');
                     } else {
                         return response()->json(array(
                             'fails'     => false,

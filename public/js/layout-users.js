@@ -1,7 +1,7 @@
 var renderer, scene, camera;
 var rendererDash, sceneDash, cameraDash;
 
-var myCanvasDash = document.getElementById("canvasDash");
+var myCanvasDash = document.getElementById("canvasLayoutUsers");
 
 
 rendererDash = new THREE.WebGLRenderer({
@@ -42,14 +42,14 @@ var particleSystemDash = new THREE.ParticleSystem(particlesDash, cloudMaterialDa
 
 sceneDash.add(particleSystemDash);
 
-animate();
+animateLayout();
 
-function animate(){
-    requestAnimationFrame( animate );
-	render();
+function animateLayout(){
+    requestAnimationFrame( animateLayout );
+	renderLayout();
 }
 
-function render(){
+function renderLayout(){
 
     for (var i = 0; i < 3; i++) {
         particleSystemDash.rotation.y += 0.00001 * i;

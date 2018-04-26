@@ -21,12 +21,14 @@ class AdminController extends Controller {
     }
 
     public function indexSoal(){
-        $soals = Soals::get();
+        $soals = Soals::with('Warnas', 'Bentuks')->get();
         return view('admin.soal.index', compact('soals'));
     }
 
     public function baruSoalShow(){
-        return view('admin.soal.baru');
+        $warna = Warnas::all();
+        $bentuk = Bentuks::all();
+        return view('admin.soal.baru', compact('warna', 'bentuk'));
     }
 
     public function indexWarna(){
@@ -50,7 +52,6 @@ class AdminController extends Controller {
         return redirect('/admin/warna');
     }
 
-
     public function indexBentuk(){
         $bentuk = Bentuks::get();
         return view ('admin.bentuk.index', compact('bentuk'));
@@ -66,6 +67,10 @@ class AdminController extends Controller {
         $bentuks->save();
 
         return redirect('/admin/bentuk');
+    }
+
+    public function keluar(){
+        return redirect('/');
     }
 }
 ?>

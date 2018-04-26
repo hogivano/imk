@@ -1,20 +1,31 @@
-@extends("admin.layouts.layout") @section("title") Soal @endsection @section("link") @section ("content")
+@extends("users.layouts.layout") @section("title") Soal @endsection @section("link") @section ("content")
 <div class="">
-    <a href="{{route('admin.soal.baru')}}" class="btn-flat btnBaru">Soal Baru</a>
     <div class="row">
+        <h4 class="white-text" style="margin-bottom: 20px">Ayo Kerjakan Semua Soal dan <br> Jadilah Yang Terbaik!!!</h4>
 <?php
     $bentukSoals = array();
     foreach ($soals as $i) {
         # code...
+        $cekSelesai = false;
+        foreach ($soalSelesai as $j) {
+            # code...
+            if ($i->id_soals == $j->id_soals){
+                $cekSelesai = true;
+                break;
+            }
+        }
+
+        if ($cekSelesai){
 ?>
         <div class="col s3">
             <div class="card">
                 <div class="card-image div-warna waves-effect waves-block waves-light">
                     <canvas id="canvas_<?php echo $i->bentuks->bentuk; ?>" class="bentukCanvas"></canvas>
+                    <img src="{{ asset('images/selesai.png')}}" style=" padding: 3px; right: 0; bottom: 0; height: 50px; width: 50px; position: absolute !important; z-index: 999" alt="">
                 </div>
-                <div class="card-content">
+                <div class="card-content" style="padding: 10px">
                     <span class="card-title activator grey-text text-darken-4"><?php echo $i->judul; ?></span>
-                    <p class="link"><a href="/admin/bentuk/edit/<?php echo $i->id_soals; ?>" class="left">Edit</a> <a href="" class="right">Hapus</a></p>
+                    <p style="text-align: right; margin-top: 10px"> <span><?php echo $i->poin ?> poin</span></p>
                 </div>
                 <div class="card-reveal">
                     <p><?php echo $i->pertanyaan; ?></p>
@@ -23,6 +34,26 @@
             </div>
         </div>
 <?php
+        } else {
+?>
+        <div class="col s3">
+            <div class="card">
+                <div class="card-image div-warna waves-effect waves-block waves-light">
+                    <canvas id="canvas_<?php echo $i->bentuks->bentuk; ?>" class="bentukCanvas"></canvas>
+                    <!-- <img src="{{ asset('images/selesai.png')}}" style=" padding: 3px; right: 0; bottom: 0; height: 50px; width: 50px; position: absolute !important; z-index: 999" alt=""> -->
+                </div>
+                <div class="card-content" style="padding: 10px">
+                    <span class="card-title activator grey-text text-darken-4">
+                        <u>
+                            <a style="color:black" href="/users/detailsoal/<?php echo $i->id_soals ?>"><?php echo $i->judul; ?></a>
+                        </u>
+                    </span>
+                    <p style="text-align: right; margin-top: 10px"> <span><?php echo $i->poin ?> poin</span></p>
+                </div>
+            </div>
+        </div>
+<?php
+        }
     }
 ?>
     </div>
@@ -32,7 +63,7 @@
 <script>
 var rendererDash, sceneDash, cameraDash;
 
-var myCanvasDash = document.getElementById("canvasDash");
+var myCanvasDash = document.getElementById("canvasLayoutUsers");
 
 
 rendererDash = new THREE.WebGLRenderer({
