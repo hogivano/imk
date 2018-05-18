@@ -11,11 +11,20 @@
         $bentuk = "";
         foreach ($soals as $soal) {
             # code...
-            $warna = $soal->warnas->hex;
-            $bentuk = $soal->bentuks->bentuk;
+            if ($soal->warnas == ""){
+                $warna = "#000000";
+            } else {
+                $warna = $soal->warnas->hex;
+            }
+
+            if ($soal->bentuks == ""){
+                $bentuk = "#000000";
+            } else {
+                $bentuk = $soal->bentuks->bentuk;
+            }
     ?>
         <div style="width: 70%; margin: auto; border: 1px solid white; background-color: black; opacity: 0.3; padding:10px 30px; box-shadow: 5px 10px #888888;">
-            <h4 style="color:white; margin-bottom: 10px;"><b><?php echo $soal->judul ?></b></h4>
+            <h4 class="center" style="color:white; margin-bottom: 10px;"><b><?php echo $soal->judul ?></b></h4>
             <div class="formLogin">
                 <form class="" action="/users/detailsoal/<?php echo $soal->id_soals ?>" method="post">
                     {{ csrf_field() }}
@@ -47,7 +56,7 @@
                     }
                 ?>
                             <div class="row">
-                                <div class="col s12">
+                                <div class="col s12 center">
                                     <button type="submit" class="" style="color:white; width: 20%; padding: 5px 0; background-color: transparent; border: 1px solid white" name="button">Simpan</button>
                                 </div>
                             </div>

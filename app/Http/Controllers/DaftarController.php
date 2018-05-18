@@ -59,7 +59,10 @@ class DaftarController extends Controller {
             //         'role'      => 1,
             //         'auth_key' => $token
             //     ]);
-
+                if ($req->password != $req->rePassword){
+                    return response()->json('gagal');
+                }
+                
                 $user = new User();
                 $user->nama_lengkap = $nama_lengkap;
                 $user->email = $email;
@@ -76,11 +79,41 @@ class DaftarController extends Controller {
                 $poinUser->poin_users = 0;
                 $poinUser->save();
 
-              return response()->json(array(
-                'success' => true,
-                'message' => 'Akun telah dibuat. Silahkan login',
-              ));
+                return response()->json('berhasil');
           }
+        }
+    }
+
+    public function daftarAdmin(Request $req){
+        $valid = Validator::make($req->all(), [
+            'nama_lengkap' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8',
+        ]);
+
+        if ($req->token == "adminolimpic123"){
+            $email = $req->email;
+            $nama_lengkap = $req->nama_lengkap;
+            $password = bcrypt($req->password);
+            $token = Str::random(60);
+
+            $user = new User();
+            $user->nama_lengkap = $nama_lengkap;
+            $user->email = $email;
+            $user->password = $password;
+            $user->role = 0;
+            $user->auth_key = $token;
+            $user->save();
+
+            return response()->json(array(
+              'success' => true,
+              'message' => 'Admin sudah dibuat silahkan login',
+            ));
+        } else {
+            return response()->json(array(
+              'success' => true,
+              'message' => 'Token salah',
+            ));
         }
     }
     //

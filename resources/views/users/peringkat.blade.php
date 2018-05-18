@@ -2,8 +2,8 @@
 <div class="">
     <div class="row">
         <div class="">
-            <p class="white-text">Anda sekarang diposisi ke :</p>
-            <h2 class="white-text" style="margin-bottom: 40px; margin-top: 10px" id="posisiku"></h2>
+            <p class="white-text center">Anda sekarang diposisi ke :</p>
+            <h2 class="white-text center" style="margin-bottom: 40px; margin-top: 10px" id="posisiku"></h2>
         </div>
         <table class="centered" style="color:white; ">
             <thead style="border-top: 1px solid white;">

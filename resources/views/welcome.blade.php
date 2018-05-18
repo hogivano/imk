@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="/css/materialize.css">
     <link rel="stylesheet" href="/css/layout.css">
     <link rel="stylesheet" href="/css/home.css">
+    <meta name="_token" content="{{ csrf_token() }}" />
     <!-- Styles -->
     <style>
         .clickme {
@@ -22,6 +23,18 @@
 </head>
 
 <body>
+    <?php
+        if (isset($msg)){
+            ?>
+            <script>
+                var msg = "<?php echo $msg ?>";
+                console.log(msg);
+                var snacbar = document.getElementById('snacbar');
+                // $("#snackbar").append(msg);
+            </script>
+            <?php
+        }
+    ?>
     <div class="home">
         <div class="content">
             <div class="content valign-wrapper">
@@ -67,16 +80,16 @@
                     <h3 style="color:white; margin-bottom: 50px;"><b>Masuk</b></h3>
                     <div class="formLogin">
                         <form class="" action="/" method="post">
-                            {{ csrf_field() }}
+
                             <div class="row">
                                 <div class="input-field ipt col s12">
-                                    <input id="email" name="email" type="email" class="validate">
+                                    <input id="emailLogin" pattern="[a-zA-Z0-9!#$%&amp;'*+\/=?^_`{|}~.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*" title="contact's email (format: example@host.com)" name="email" type="text" class="validate">
                                     <label for="email">Email</label>
                                 </div>
                             </div>
                             <div class="row" style="margin-bottom: 5px">
                                 <div class="input-field ipt col s12">
-                                    <input id="password" name="password" type="password" class="validate">
+                                    <input id="passwordLogin" name="password" type="password" class="validate">
                                     <label for="password">Password</label>
                                 </div>
                             </div>
@@ -87,7 +100,7 @@
                             </div>
                             <div class="row">
                                 <div class="col s12">
-                                    <button type="submit" class="" style="color:white; width: 20%; padding: 5px 0; background-color: transparent; border: 1px solid white" name="button">Login</button>
+                                    <button id="btnLogin" type="button" class="" style="color:white; width: 20%; padding: 5px 0; background-color: transparent; border: 1px solid white" name="button">Login</button>
                                 </div>
                             </div>
                         </form>
@@ -108,19 +121,19 @@
                             </div>
                             <div class="row" style="margin-bottom: 5px">
                                 <div class="input-field ipt col s12">
-                                    <input id="email" name="email" type="email" class="validate">
+                                    <input id="email" name="email" type="text" pattern="[a-zA-Z0-9!#$%&amp;'*+\/=?^_`{|}~.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*" title="contact's email (format: example@host.com)" class="validate">
                                     <label for="email">Email</label>
                                 </div>
                             </div>
-                            <div class="row" style="margin-bottom: 5px">
+                            <div id="divPass" class="row" style="margin-bottom: 5px">
                                 <div class="input-field ipt col s12">
                                     <input id="password" name="password" type="password" class="validate">
                                     <label for="password">Password</label>
                                 </div>
                             </div>
-                            <div class="row" style="margin-bottom: 5px">
+                            <div id="divRePass" class="row" style="margin-bottom: 5px">
                                 <div class="input-field ipt col s12">
-                                    <input id="rePassword" name="rePassword" type="password" class="validate">
+                                    <input id="rePassword" name="rePassword" min="8" type="password" class="validate">
                                     <label for="password">Re-password</label>
                                 </div>
                             </div>
@@ -131,7 +144,7 @@
                             </div>
                             <div class="row">
                                 <div class="col s12">
-                                    <button type="submit" class="" style="color:white; width: 20%; padding: 5px 0; background-color: transparent; border: 1px solid white" name="button">Daftar</button>
+                                    <button id="btnSignUp" type="button" class="" style="color:white; width: 20%; padding: 5px 0; background-color: transparent; border: 1px solid white" name="button">Daftar</button>
                                 </div>
                             </div>
                         </form>
@@ -144,10 +157,149 @@
             <canvas id="canvasLogin"></canvas>
         </div>
     </div>
+    <div id="snackbar">msg</div>
     <script src="/js/three.js"></script>
     <script src="/js/tween.min.js"></script>
     <script src="/js/jquery-3.2.1.js"></script>
     <script src="/js/materialize.js"></script>
     <script src="/js/coba.js"> </script>
+    <script>
+        $.ajaxSetup({
+            header:$('meta[name="_token"]').attr('content')
+        });
+
+        $("#btnLogin").on("click", function(e){
+            e.preventDefault(e);
+
+            var formData = {
+                _token : $("input[name=_token]").val(),
+                email : $("#emailLogin").val(),
+                password : $("#passwordLogin").val()
+            };
+
+            $.ajax({
+                type : "post",
+                url : "{{ url('/') }}",
+                data : formData,
+                success : function (data) {
+                    if ((data.errors)){
+                        // alert("data error");
+                        $("#snackbar").html("email atau password anda salah");
+                        var x = document.getElementById("snackbar");
+
+                        // Add the "show" class to DIV
+                        x.className = "show";
+
+                        // After 3 seconds, remove the show class from DIV
+                        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+                        console.log(data);
+                    } else {
+                        if (data == 'users'){
+                            window.location.replace("{{ url('/users/dashboard') }}");
+                        } else {
+                            window.location.replace("{{ url('/admin/dashboard') }}");
+                        }
+                    }
+                },
+                error : function (data) {
+                    console.log("Error", data);
+                    console.log(formData);
+                },
+            });
+        });
+
+        $("#btnSignUp").on("click", function(e){
+            e.preventDefault(e);
+            console.log("masuk btn daftar");
+            var formData = {
+                _token : $("input[name=_token]").val(),
+                nama_lengkap : $("#nama").val(),
+                email : $("#email").val(),
+                password : $("#password").val(),
+                rePassword : $("#rePassword").val()
+            };
+
+            $.ajax({
+                type : "post",
+                url : "{{ url('/daftar') }}",
+                data : formData,
+                success : function (data) {
+                    if ((data.errors)){
+                        // alert("data error");
+                        $("#snackbar").html("akun gagal, silahkan cek kembali");
+                        var x = document.getElementById("snackbar");
+
+                        // Add the "show" class to DIV
+                        x.className = "show";
+
+                        // After 3 seconds, remove the show class from DIV
+                        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+                        console.log(data);
+                    } else {
+                        console.log(data);
+                        if (data == 'berhasil'){
+                            $('#daftar').animate({
+                                top: '100%'
+                            }, 1000);
+
+                            $('#masuk').animate({
+                                top: '0'
+                            }, 1000);
+
+                            new TWEEN.Tween(rendererMenu.setClearColor(0x009699)).to(rendererMenu.setClearColor(0x009668))
+                        					.easing( TWEEN.Easing.Elastic.Out).start();
+
+                            $("#snackbar").html("silahkan login");
+                            var x = document.getElementById("snackbar");
+
+                            // Add the "show" class to DIV
+                            x.className = "show";
+
+                            // After 3 seconds, remove the show class from DIV
+                            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+                        } else {
+                            $("#snackbar").html("password dan rePassword harus sama");
+                            var x = document.getElementById("snackbar");
+
+                            // Add the "show" class to DIV
+                            x.className = "show";
+
+                            // After 3 seconds, remove the show class from DIV
+                            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+                        }
+                        // if (data == 'users'){
+                        //     window.location.replace("{{ url('/users/dashboard') }}");
+                        // } else {
+                        //     window.location.replace("{{ url('/admin/dashboard') }}");
+                        // }
+                    }
+                },
+                error : function (data) {
+                    console.log("Error", data);
+                    console.log(formData);
+                },
+            });
+        });
+
+        $("#divRePass").on('keyup', function(){
+            if ($("#password").val() != $("#rePassword")){
+                $("#divRePass").addClass("has-error");
+            } else {
+                $("#divRePass").removeClass("has-error");
+            }
+        });
+
+
+        // function myFunction() {
+    // Get the snackbar DIV
+            // var x = document.getElementById("snackbar");
+            //
+            // // Add the "show" class to DIV
+            // x.className = "show";
+            //
+            // // After 3 seconds, remove the show class from DIV
+            // setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+        // }
+    </script>
 </body>
 </html>

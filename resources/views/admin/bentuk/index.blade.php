@@ -1,7 +1,7 @@
 @extends("admin.layouts.layout") @section("title") Bentuk @endsection
 @section("link")
 @section ("content")
-<div class="">
+<div class="center">
     <a href="{{route('admin.bentuk.baru')}}" class="btn-flat btnBaru">Bentuk Baru</a>
     <div class="row">
 <?php
@@ -15,7 +15,7 @@
                 </div>
                 <div class="card-content">
                     <span class="card-title activator grey-text text-darken-4"><?php echo $i->bentuk; ?></span>
-                    <p class="link"><a href="/admin/bentuk/edit/<?php echo $i->id_bentuks; ?>" class="left">Edit</a> <a href="" class="right">Hapus</a></p>
+                    <p class="link"><a href="/admin/bentuk/edit/<?php echo $i->id_bentuks; ?>" class="left">Edit</a> <a href="/admin/bentuk/delete/<?php echo $i->id_bentuks; ?>" class="right">Hapus</a></p>
                 </div>
             </div>
         </div>

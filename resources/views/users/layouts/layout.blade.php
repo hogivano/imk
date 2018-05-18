@@ -28,41 +28,35 @@
 </head>
 
 <body>
-    <div class="main">
-        <div class="content">
-            <div class="content">
-                <div class="row">
-                    <div class="col s2" style="padding: 0;">
-                        <div class="" style="height: 100vh; background-color: white">
-                            <ul class="collection with-header" style="margin: 0;">
-                                <li class="collection-header">
-                                    <div class="user-view">
-                                        <div class="">
-                                            <div>
-                                                <img class="circle responsive-img" width="100vh" src="{{ asset('/images/avatar.png') }}">
-                                            </div>
-                                            <div class="detail">
-                                                <p>{{ Session::get('namaUser') }}</p>
-                                                <p>{{ Session::get('emailUser') }}</p>
-                                                <p>{{ Session::get('poinUser') }} poin</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="collection-item"><a href="{{ route('users.soal') }}">Soal</a></li>
-                                <li class="collection-item"><a href="{{ route('users.peringkat') }}">Peringkat</a></li>
-                                <li class="collection-item"><a href="{{ route('users.keluar') }}">Keluar</a></li>
-                            </ul>
+    <div class="" style="height: 100vh; width: 16.6666666667%; background-color: white; position: fixed; z-index: 9999">
+        <ul class="collection with-header" style="margin: 0;">
+            <li class="collection-header">
+                <div class="user-view">
+                    <div class="center">
+                        <div>
+                            <img class="circle responsive-img" width="100vh" src="{{ asset('/images/avatar.png') }}">
+                        </div>
+                        <div class="detail center">
+                            <p>{{ Session::get('namaUser') }}</p>
+                            <p>{{ Session::get('emailUser') }}</p>
+                            <p>{{ Session::get('poinUser') }} poin</p>
                         </div>
                     </div>
-                    <div class="col s10" style="padding: 0;">
-                        @yield("content")
-                    </div>
                 </div>
+            </li>
+            <li class="collection-item center"><a href="{{ route('users.soal') }}">Soal</a></li>
+            <li class="collection-item center"><a href="{{ route('users.peringkat') }}">Peringkat</a></li>
+            <li class="collection-item center"><a href="{{ route('users.keluar') }}">Keluar</a></li>
+        </ul>
+    </div>
+    <div class="main" style="width: 100%; position: absolute; z-index: 9998">
+        <div class="row">
+            <div class="col s10 offset-s2" style="padding: 0;">
+                @yield("content")
             </div>
-            <canvas id="canvasLayoutUsers"></canvas>
         </div>
     </div>
+    <canvas style="position: fixed" id="canvasLayoutUsers"></canvas>
 </body>
 <script src="{{asset('js/three.js')}}"></script>
 <script src="{{asset('js/jquery-3.2.1.js')}}"></script>

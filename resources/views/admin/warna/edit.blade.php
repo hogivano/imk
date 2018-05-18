@@ -3,20 +3,28 @@
     <div style="margin: auto; width: 40%;border: 1px solid white; background-color: black; opacity: 0.3; padding:80px 30px; box-shadow: 5px 10px #888888;" class="center">
         <h3 style="color:white; margin-bottom: 50px; center"><b>Warna Baru</b></h3>
         <div class="formLogin">
-            <form class="" action="{{ route('admin.warna.create') }}" method="post">
+            <form class="" action="{{ url('admin/warna/update') }}" method="post">
                 {{ csrf_field() }}
+                <?php
+                foreach ($warna as $i) {
+                    # code...
+                ?>
+                <input type="text" hidden="true" name="id_warnas" value="<?php echo $i->id_warnas ?>">
                 <div class="row">
                     <div class="input-field ipt col s12">
-                        <input id="warna" required name="warna" type="text" class="validate">
+                        <input id="warna" required name="warna" type="text" value="<?php echo $i->warna ?>" class="validate">
                         <label for="warna">Warna</label>
                     </div>
                 </div>
                 <div class="row" style="margin-bottom: 5px">
                     <div class="input-field ipt col s12">
-                        <input id="hex" required name="hex" type="text" class="validate">
+                        <input id="hex" required name="hex" value="<?php echo $i->hex ?>" type="text" class="validate">
                         <label for="hex">Hex</label>
                     </div>
                 </div>
+                <?php
+                }
+                ?>
                 <div class="row">
                     <div class="col s12 center">
                         <button type="submit" class="" style="color:white; width: 20%; padding: 5px 0; background-color: transparent; border: 1px solid white" name="button">Simpan</button>

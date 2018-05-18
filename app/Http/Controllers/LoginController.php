@@ -26,14 +26,19 @@ class LoginController extends Controller{
             $user = User::where('email', $req->email)->first();
             if (!empty($user)){
                 if (Hash::check($req->password, $user->password)){
-
+                    
                     if ($user->role == 0){
                         Auth::guard('admin')->attempt(['email' => $req->email, 'password' => $req->password], $req->has('remember'));
                         // return response()->json(array(
                         //     'fails'     => false,
                         //     'redirect'  => route('admin.dashboard')
                         // ));
-                        return redirect()->route('admin.dashboard');
+                        Session::put('idAdmin',$user->id_users);
+                        Session::put('namaAdmin',$user->nama_lengkap);
+                        Session::put('emailAdmin',$user->email);
+
+                        return response()->json('admin');
+                        // return redirect()->route('admin.dashboard');
                     }else if ($user->role == 1){
                         $this->guard()->attempt([
                             'email'     => $req->email,
@@ -50,8 +55,8 @@ class LoginController extends Controller{
                             # code...
                             Session::put('poinUser', $i->poin_users);
                         }
-
-                        return redirect()->route('users.dashboard');
+                        return response()->json('users');
+                        // return redirect()->route('users.dashboard');
                     } else {
                         return response()->json(array(
                             'fails'     => false,
@@ -63,12 +68,18 @@ class LoginController extends Controller{
                         'fails'     => true,
                         'errors'    => 'email atau password anda salah'
                     ));
+                    // $msg = "email atau password anda salah";
+                    // $show = "login";
+                    // return redirect()->route('index')->with('msg', 'show');
                 }
             } else {
                 return response()->json(array(
                     'fails'     => true,
                     'errors'    => 'email atau password anda salah'
                 ));
+                // $msg = "email atau password anda salah";
+                // $show = "login";
+                // return redirect()->route('index')->with('msg', 'show');
             }
         }
     }

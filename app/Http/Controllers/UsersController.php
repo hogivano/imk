@@ -22,9 +22,22 @@ class UsersController extends Controller {
     }
 
     public function indexSoal(){
+        if (isset($_GET["kat"])){
+            $kat = $_GET["kat"];
+        } else {
+            $kat = "";
+        }
         $soals = Soals::with('Warnas', 'Bentuks')->get();
-        $soalSelesai = SoalSelesais::where('id_users', Session::get('idUser'))->get();
-        return view('users.soal.index', compact('soals', 'soalSelesai'));
+        $bentuk = Bentuks::all();
+        $poinUsers = PoinUsers::where('id_users', Session::get('idUser'))->get();
+        $id_poin_users = "";
+        foreach ($poinUsers as $keyPoin) {
+            # code...
+            $id_poin_users = $keyPoin->id_poin_users;
+        }
+
+        $soalSelesai = SoalSelesais::where('id_poin_users', $id_poin_users)->get();
+        return view('users.soal.index', compact('soals', 'soalSelesai', 'bentuk', 'kat'));
     }
 
     public function detailSoal($id){
@@ -40,9 +53,16 @@ class UsersController extends Controller {
                 foreach ($cekJawaban as $jwb) {
                     # code...
                     if ($jwb->benar_salah == 1){
+                        $poinUser = PoinUsers::where('id_users', $req->id_users)->get();
+                        $id_poin_users = "";
+                        foreach ($poinUser as $keyPoin) {
+                            # code...
+                            $id_poin_users = $keyPoin->id_poin_users;
+                        }
+
                         $soalSelesai = new SoalSelesais();
                         $soalSelesai->id_soals = $req->id_soals;
-                        $soalSelesai->id_users = $req->id_users;
+                        $soalSelesai->id_poin_users = $id_poin_users;
                         $soalSelesai->save();
 
                         $poinUser = PoinUsers::where('id_users', $req->id_users)->increment('poin_users', $req->poin);
@@ -73,6 +93,7 @@ class UsersController extends Controller {
         Session::forget('idUser');
         Session::forget('namaUser');
         Session::forget('emailUser');
+        Session::forget('poinUser');
         return redirect('/');
     }
 }

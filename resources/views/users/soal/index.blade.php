@@ -1,7 +1,45 @@
 @extends("users.layouts.layout") @section("title") Soal @endsection @section("link") @section ("content")
 <div class="">
-    <div class="row">
-        <h4 class="white-text" style="margin-bottom: 20px">Ayo Kerjakan Semua Soal dan <br> Jadilah Yang Terbaik!!!</h4>
+    <div class="" style="position: absolute">
+        <?php
+            if ($kat == "soalselesai"){
+                ?>
+                <a id="soalselesai" class="active" href="?kat=soalselesai"><span class="badge white-text" style="background-color: grey">soal selesai</span></a>
+                <?php
+            } else {
+                ?>
+                <a id="soalselesai" class="active" href="?kat=soalselesai"><span class="badge white-text" style="background-color: #009999">soal selesai</span></a>
+                <?php
+            }
+        ?>
+        <?php
+            $countB = 1;
+            foreach ($bentuk as $j) {
+                # code...
+                if ($kat == $j->bentuk){
+                    ?>
+                    <a id="<?php echo $j->bentuk ?>" href="?kat=<?php echo $j->bentuk ?>"><span class="badge white-text" style="background-color: grey"><?php echo $j->bentuk ?></span></a>
+                    <?php
+                } else {
+                    ?>
+                    <a id="<?php echo $j->bentuk ?>" href="?kat=<?php echo $j->bentuk ?>"><span class="badge white-text" style="background-color: #009999"><?php echo $j->bentuk ?></span></a>
+                    <?php
+                }
+                ?>
+
+                <?php
+                if ($countB % 2 == 0){
+                    ?>
+                    <br style="margin: 3px 0">
+                    <?php
+                }
+
+                $countB++;
+            }
+        ?>
+    </div>
+    <div id="kumpulanSoal" class="row">
+        <h4 class="white-text center" style="margin-bottom: 20px">Ayo Kerjakan Semua Soal dan <br> Jadilah Yang Terbaik!!!</h4>
 <?php
     $bentukSoals = array();
     foreach ($soals as $i) {
@@ -15,44 +53,170 @@
             }
         }
 
-        if ($cekSelesai){
-?>
-        <div class="col s3">
-            <div class="card">
-                <div class="card-image div-warna waves-effect waves-block waves-light">
-                    <canvas id="canvas_<?php echo $i->bentuks->bentuk; ?>" class="bentukCanvas"></canvas>
-                    <img src="{{ asset('images/selesai.png')}}" style=" padding: 3px; right: 0; bottom: 0; height: 50px; width: 50px; position: absolute !important; z-index: 999" alt="">
-                </div>
-                <div class="card-content" style="padding: 10px">
-                    <span class="card-title activator grey-text text-darken-4"><?php echo $i->judul; ?></span>
-                    <p style="text-align: right; margin-top: 10px"> <span><?php echo $i->poin ?> poin</span></p>
-                </div>
-                <div class="card-reveal">
-                    <p><?php echo $i->pertanyaan; ?></p>
-                    <span class="card-title grey-text text-darken-4"><i>&times;</i></span>
-                </div>
-            </div>
-        </div>
-<?php
+        if ($kat == $i->bentuks->bentuk){
+
+                    if ($cekSelesai){
+            ?>
+                    <div class="col s3">
+                        <div class="card">
+                            <div class="card-image div-warna waves-effect waves-block waves-light">
+                                <canvas id="canvas_<?php echo $i->bentuks->bentuk . "_" .  $i->id_soals; ?>" class="bentukCanvas"></canvas>
+                                <img src="{{ asset('images/selesai.png')}}" style=" padding: 3px; right: 0; bottom: 0; height: 50px; width: 50px; position: absolute !important; z-index: 999" alt="">
+                            </div>
+                            <div class="card-content" style="padding: 10px">
+                                <span class="card-title activator grey-text text-darken-4 center"><?php echo $i->judul; ?></span>
+                                <p style="text-align: right; margin-top: 10px"> <span><?php echo $i->poin ?> poin</span></p>
+                            </div>
+                            <div class="card-reveal">
+                                <p class="center"><?php echo $i->pertanyaan; ?></p>
+                                <span class="card-title grey-text center text-darken-4"><i>&times;</i></span>
+                            </div>
+                        </div>
+                    </div>
+            <?php
+                    } else {
+                            ?>
+                                    <div class="col s3">
+                                        <div class="card">
+                                            <div class="card-image div-warna waves-effect waves-block waves-light">
+                                                <canvas id="canvas_<?php echo $i->bentuks->bentuk. "_" .  $i->id_soals; ?>" class="bentukCanvas"></canvas>
+                                                <!-- <img src="{{ asset('images/selesai.png')}}" style=" padding: 3px; right: 0; bottom: 0; height: 50px; width: 50px; position: absolute !important; z-index: 999" alt=""> -->
+                                            </div>
+                                            <div class="card-content" style="padding: 10px">
+                                                <span class="card-title activator grey-text text-darken-4 center">
+                                                    <u>
+                                                        <a style="color:black" href="/users/detailsoal/<?php echo $i->id_soals ?>"><?php echo $i->judul; ?></a>
+                                                    </u>
+                                                </span>
+                                                <p style="text-align: right; margin-top: 10px"> <span><?php echo $i->poin ?> poin</span></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                            <?php
+                    }
+        } else if ($kat == ""){
+
+                    if ($cekSelesai){
+            ?>
+                    <div class="col s3">
+                        <div class="card">
+                            <div class="card-image div-warna waves-effect waves-block waves-light">
+                                <canvas id="canvas_<?php echo $i->bentuks->bentuk . "_" .  $i->id_soals; ?>" class="bentukCanvas"></canvas>
+                                <img src="{{ asset('images/selesai.png')}}" style=" padding: 3px; right: 0; bottom: 0; height: 50px; width: 50px; position: absolute !important; z-index: 999" alt="">
+                            </div>
+                            <div class="card-content" style="padding: 10px">
+                                <span class="card-title activator grey-text text-darken-4 center"><?php echo $i->judul; ?></span>
+                                <p style="text-align: right; margin-top: 10px"> <span><?php echo $i->poin ?> poin</span></p>
+                            </div>
+                            <div class="card-reveal">
+                                <p class="center"><?php echo $i->pertanyaan; ?></p>
+                                <span class="card-title grey-text center text-darken-4"><i>&times;</i></span>
+                            </div>
+                        </div>
+                    </div>
+            <?php
+                    } else {
+                            ?>
+                                    <div class="col s3">
+                                        <div class="card">
+                                            <div class="card-image div-warna waves-effect waves-block waves-light">
+                                                <canvas id="canvas_<?php echo $i->bentuks->bentuk. "_" .  $i->id_soals; ?>" class="bentukCanvas"></canvas>
+                                                <!-- <img src="{{ asset('images/selesai.png')}}" style=" padding: 3px; right: 0; bottom: 0; height: 50px; width: 50px; position: absolute !important; z-index: 999" alt=""> -->
+                                            </div>
+                                            <div class="card-content" style="padding: 10px">
+                                                <span class="card-title activator grey-text text-darken-4 center">
+                                                    <u>
+                                                        <a style="color:black" href="/users/detailsoal/<?php echo $i->id_soals ?>"><?php echo $i->judul; ?></a>
+                                                    </u>
+                                                </span>
+                                                <p style="text-align: right; margin-top: 10px"> <span><?php echo $i->poin ?> poin</span></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                            <?php
+                    }
+        } else if ($kat == "soalselesai"){
+
+                    if ($cekSelesai){
+            ?>
+                    <div class="col s3">
+                        <div class="card">
+                            <div class="card-image div-warna waves-effect waves-block waves-light">
+                                <canvas id="canvas_<?php echo $i->bentuks->bentuk . "_" .  $i->id_soals; ?>" class="bentukCanvas"></canvas>
+                                <img src="{{ asset('images/selesai.png')}}" style=" padding: 3px; right: 0; bottom: 0; height: 50px; width: 50px; position: absolute !important; z-index: 999" alt="">
+                            </div>
+                            <div class="card-content" style="padding: 10px">
+                                <span class="card-title activator grey-text text-darken-4 center"><?php echo $i->judul; ?></span>
+                                <p style="text-align: right; margin-top: 10px"> <span><?php echo $i->poin ?> poin</span></p>
+                            </div>
+                            <div class="card-reveal">
+                                <p class="center"><?php echo $i->pertanyaan; ?></p>
+                                <span class="card-title grey-text center text-darken-4"><i>&times;</i></span>
+                            </div>
+                        </div>
+                    </div>
+            <?php
+                    } else {
+                            ?>
+                                    <div class="col s3 noneDisplay">
+                                        <div class="card">
+                                            <div class="card-image div-warna waves-effect waves-block waves-light">
+                                                <canvas id="canvas_<?php echo $i->bentuks->bentuk. "_" .  $i->id_soals; ?>" class="bentukCanvas"></canvas>
+                                                <!-- <img src="{{ asset('images/selesai.png')}}" style=" padding: 3px; right: 0; bottom: 0; height: 50px; width: 50px; position: absolute !important; z-index: 999" alt=""> -->
+                                            </div>
+                                            <div class="card-content" style="padding: 10px">
+                                                <span class="card-title activator grey-text text-darken-4 center">
+                                                    <u>
+                                                        <a style="color:black" href="/users/detailsoal/<?php echo $i->id_soals ?>"><?php echo $i->judul; ?></a>
+                                                    </u>
+                                                </span>
+                                                <p style="text-align: right; margin-top: 10px"> <span><?php echo $i->poin ?> poin</span></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                            <?php
+                    }
         } else {
-?>
-        <div class="col s3">
-            <div class="card">
-                <div class="card-image div-warna waves-effect waves-block waves-light">
-                    <canvas id="canvas_<?php echo $i->bentuks->bentuk; ?>" class="bentukCanvas"></canvas>
-                    <!-- <img src="{{ asset('images/selesai.png')}}" style=" padding: 3px; right: 0; bottom: 0; height: 50px; width: 50px; position: absolute !important; z-index: 999" alt=""> -->
-                </div>
-                <div class="card-content" style="padding: 10px">
-                    <span class="card-title activator grey-text text-darken-4">
-                        <u>
-                            <a style="color:black" href="/users/detailsoal/<?php echo $i->id_soals ?>"><?php echo $i->judul; ?></a>
-                        </u>
-                    </span>
-                    <p style="text-align: right; margin-top: 10px"> <span><?php echo $i->poin ?> poin</span></p>
-                </div>
-            </div>
-        </div>
-<?php
+
+                    if ($cekSelesai){
+            ?>
+                    <div class="col s3 noneDisplay">
+                        <div class="card">
+                            <div class="card-image div-warna waves-effect waves-block waves-light">
+                                <canvas id="canvas_<?php echo $i->bentuks->bentuk . "_" .  $i->id_soals; ?>" class="bentukCanvas"></canvas>
+                                <img src="{{ asset('images/selesai.png')}}" style=" padding: 3px; right: 0; bottom: 0; height: 50px; width: 50px; position: absolute !important; z-index: 999" alt="">
+                            </div>
+                            <div class="card-content" style="padding: 10px">
+                                <span class="card-title activator grey-text text-darken-4 center"><?php echo $i->judul; ?></span>
+                                <p style="text-align: right; margin-top: 10px"> <span><?php echo $i->poin ?> poin</span></p>
+                            </div>
+                            <div class="card-reveal">
+                                <p class="center"><?php echo $i->pertanyaan; ?></p>
+                                <span class="card-title grey-text center text-darken-4"><i>&times;</i></span>
+                            </div>
+                        </div>
+                    </div>
+            <?php
+                    } else {
+                            ?>
+                                    <div class="col s3 noneDisplay">
+                                        <div class="card">
+                                            <div class="card-image div-warna waves-effect waves-block waves-light">
+                                                <canvas id="canvas_<?php echo $i->bentuks->bentuk. "_" .  $i->id_soals; ?>" class="bentukCanvas"></canvas>
+                                                <!-- <img src="{{ asset('images/selesai.png')}}" style=" padding: 3px; right: 0; bottom: 0; height: 50px; width: 50px; position: absolute !important; z-index: 999" alt=""> -->
+                                            </div>
+                                            <div class="card-content" style="padding: 10px">
+                                                <span class="card-title activator grey-text text-darken-4 center">
+                                                    <u>
+                                                        <a style="color:black" href="/users/detailsoal/<?php echo $i->id_soals ?>"><?php echo $i->judul; ?></a>
+                                                    </u>
+                                                </span>
+                                                <p style="text-align: right; margin-top: 10px"> <span><?php echo $i->poin ?> poin</span></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                            <?php
+                    }
         }
     }
 ?>
@@ -116,14 +280,24 @@ sceneDash.add(particleSystemDash);
         foreach ($soals as $soal) {
             # code...
             ?>
-                myCanvas[count] = document.getElementById("canvas_<?php echo $soal->bentuks->bentuk; ?>");
-                idCanvas[count] = "canvas_<?php echo $soal->bentuks->bentuk ?>";
+                myCanvas[count] = document.getElementById("canvas_<?php echo $soal->bentuks->bentuk . '_' . $soal->id_soals; ?>");
+                idCanvas[count] = "canvas_<?php echo $soal->bentuks->bentuk . '_' . $soal->id_soals; ?>";
 
-                var str = "<?php echo $soal->warnas->hex ?>";
-                hex = str.replace("#", "0x");
-                warna[count] = hex;
-                count++;
-            <?php
+                <?php
+                if ($soal->warnas == ""){
+                    ?>
+                    hex = "0x00000A";
+                    warna[count] = hex;
+                    count++;
+                    <?php
+                } else {
+                    ?>
+                    var str = "<?php echo $soal->warnas->hex ?>";
+                    hex = str.replace("#", "0x");
+                    warna[count] = hex;
+                    count++;
+                    <?php
+                }
         }
     ?>
 
@@ -284,5 +458,12 @@ sceneDash.add(particleSystemDash);
 
         return planeMesh;
     }
+</script>
+<script>
+    $(".noneDisplay").css("display", "none");
+    if ($(".noneDisplay").css("display") == "none"){
+        $(".bentukCanvas").css("width", "262");
+    }
+
 </script>
 @endsection

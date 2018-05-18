@@ -1,29 +1,35 @@
-@extends("admin.layouts.layout") @section("title") Warna @endsection
-@section("link")
-@section ("content")
-<div class="center">
-    <a href="{{route('admin.warna.baru')}}" class="btn-flat btnBaru">Warna Baru</a>
-    <div class="row">
-<?php
-    foreach ($warna as $i) {
-        # code...
-?>
-        <div class="col s3">
-            <div class="card">
-                <div class="card-image div-warna waves-effect waves-block waves-light" style="background-color: <?php echo $i->hex ?>">
+@extends("admin.layouts.layout") @section("title") Edit bentuk @endsection @section("link") @section ("content")
+<div class="valign-wrapper" style="height: 100vh">
+    <div style="margin: auto; width: 40%;border: 1px solid white; background-color: black; opacity: 0.3; padding:80px 30px; box-shadow: 5px 10px #888888;">
+        <h3 style="color:white; margin-bottom: 50px;" class="center"><b>Edit Bentuk</b></h3>
+        <div class="formLogin">
+            <form class="" action="{{ url('admin/bentuk/update') }}" method="post">
+                {{ csrf_field() }}
+                <?php
+                foreach ($bentuk as $i) {
+                    # code...
+                ?>
+                <input type="text" name="id_bentuks" hidden="true" value="<?php echo $i->id_bentuks ?>">
+                <div class="row">
+                    <div class="input-field ipt col s12">
+                        <input id="warna" required name="bentuk" value="<?php echo $i->bentuk ?>" type="text" class="validate">
+                        <label for="warna">Bentuk</label>
+                    </div>
                 </div>
-                <div class="card-content">
-                    <span class="card-title activator grey-text text-darken-4"><?php echo $i->warna; ?></span>
-                    <p class="link"><a href="/admin/warna/edit/<?php echo $i->id_warnas; ?>" class="left">Edit</a> <a href="/admin/warna/delete/<?php echo $i->id_warnas; ?>" class="right">Hapus</a></p>
+                <?php
+                }
+                ?>
+                <div class="row">
+                    <div class="col s12 center">
+                        <button type="submit" class="" style="color:white; width: 20%; padding: 5px 0; background-color: transparent; border: 1px solid white" name="button">Simpan</button>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
-<?php
-    }
-?>
     </div>
 </div>
-@endsection @section("script")
+@endsection
+@section("script")
 <script>
 var rendererDash, sceneDash, cameraDash;
 
@@ -34,7 +40,7 @@ rendererDash = new THREE.WebGLRenderer({
     canvas: myCanvasDash, antialias: true
 });
 
-rendererDash.setClearColor(0x009658);
+rendererDash.setClearColor(0x009699);
 rendererDash.setPixelRatio(window.devicePixelRatio);
 rendererDash.setSize(window.innerWidth, window.innerHeight);
 
@@ -67,8 +73,8 @@ for (var j = 0; j < 30000; j++) {
 var particleSystemDash = new THREE.ParticleSystem(particlesDash, cloudMaterialDash);
 
 sceneDash.add(particleSystemDash);
-
 animate();
+
 function animate(){
     requestAnimationFrame( animate );
     render();

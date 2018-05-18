@@ -1,6 +1,6 @@
 @extends("admin.layouts.layout") @section("title") Soal @endsection @section("link") @section ("content")
-<div class="">
-    <a href="{{route('admin.soal.baru')}}" class="btn-flat btnBaru">Soal Baru</a>
+<div class="center">
+    <a href="{{route('admin.soal.baru')}}" class="btn-flat btnBaru center">Soal Baru</a>
     <div class="row">
 <?php
     $bentukSoals = array();
@@ -10,11 +10,21 @@
         <div class="col s3">
             <div class="card">
                 <div class="card-image div-warna waves-effect waves-block waves-light">
-                    <canvas id="canvas_<?php echo $i->bentuks->bentuk; ?>" class="bentukCanvas"></canvas>
+                    <?php
+                    if ($i->bentuks == ""){
+                        ?>
+                        <canvas id="canvas_<?php echo 'nothing' . '_' . $i->id_soals; ?>" class="bentukCanvas"></canvas>
+                        <?php
+                    } else {
+                        ?>
+                        <canvas id="canvas_<?php echo $i->bentuks->bentuk . '_' . $i->id_soals; ?>" class="bentukCanvas"></canvas>
+                        <?php
+                    }
+                    ?>
                 </div>
                 <div class="card-content">
                     <span class="card-title activator grey-text text-darken-4"><?php echo $i->judul; ?></span>
-                    <p class="link"><a href="/admin/bentuk/edit/<?php echo $i->id_soals; ?>" class="left">Edit</a> <a href="" class="right">Hapus</a></p>
+                    <p class="link"><a href="/admin/soal/edit/<?php echo $i->id_soals; ?>" class="left">Edit</a> <a href="/admin/soal/delete/<?php echo $i->id_soals ?>" class="right">Hapus</a></p>
                 </div>
                 <div class="card-reveal">
                     <p><?php echo $i->pertanyaan; ?></p>
@@ -84,15 +94,34 @@ sceneDash.add(particleSystemDash);
     <?php
         foreach ($soals as $soal) {
             # code...
+                if ($soal->bentuks == ""){
+                    ?>
+                    myCanvas[count] = document.getElementById("canvas_<?php echo 'nothing' . '_' . $soal->id_soals; ?>");
+                    idCanvas[count] = "canvas_<?php echo 'nothing' . '_' . $soal->id_soals; ?>";
+                    <?php
+                } else {
+                    ?>
+                    myCanvas[count] = document.getElementById("canvas_<?php echo $soal->bentuks->bentuk . '_' . $soal->id_soals; ?>");
+                    idCanvas[count] = "canvas_<?php echo $soal->bentuks->bentuk . '_' . $soal->id_soals; ?>";
+                    <?php
+                }
             ?>
-                myCanvas[count] = document.getElementById("canvas_<?php echo $soal->bentuks->bentuk; ?>");
-                idCanvas[count] = "canvas_<?php echo $soal->bentuks->bentuk ?>";
 
-                var str = "<?php echo $soal->warnas->hex ?>";
-                hex = str.replace("#", "0x");
-                warna[count] = hex;
-                count++;
-            <?php
+                <?php
+                if ($soal->warnas == ""){
+                    ?>
+                    hex = "0x000000";
+                    warna[count] = hex;
+                    count++;
+                    <?php
+                } else {
+                    ?>
+                    var str = "<?php echo $soal->warnas->hex ?>";
+                    hex = str.replace("#", "0x");
+                    warna[count] = hex;
+                    count++;
+                    <?php
+                }
         }
     ?>
 
@@ -142,6 +171,8 @@ sceneDash.add(particleSystemDash);
             mesh[i] = addBola();
         } else if (idCanvas[i].includes("tabung")){
             mesh[i] = addTabung();
+        } else {
+            mesh[i] = addNothing();
         }
 
         sceneSoal[i].add(particleSystemSoal[i]);
@@ -181,6 +212,25 @@ sceneDash.add(particleSystemDash);
         rendererDash.render(sceneDash, cameraDash);
     }
     console.log(count);
+
+    function addNothing(){
+        var theText = "Bangun Kosong";
+        var geometry = new THREE.TextGeometry( theText, {
+					font: font,
+					size: 20,
+					height: 10,
+					curveSegments: 2
+				});
+                var materials = [
+        					new THREE.MeshBasicMaterial( { color: Math.random() * 0xffffff, overdraw: 0.5 } ),
+        					new THREE.MeshBasicMaterial( { color: 0x000000, overdraw: 0.5 } )
+        				];
+        var mesh = new THREE.Mesh( geometry, materials );
+        mesh.position.x = 0;
+        mesh.position.y = 10;
+        mesh.position.z = 0;
+        return mesh;
+    }
 
     function addKubus(){
         var geometry = new THREE.BoxGeometry( 32, 32, 32 );
